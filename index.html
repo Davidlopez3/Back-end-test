@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Untitled Document</title>
+	
+		<link rel="stylesheet" href="style.css">
+		<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600,700' rel='stylesheet">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+		<script src="jquery-3.5.1.min.js"></script>
+		<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600,700" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link href='https://fonts.googleapis.com/css?family=Rock+Salt' rel='stylesheet' type='text/css'>
+		<script type="text/javascript" src="js/jquerry.js">
+		</script>
+	</head>
+	
+</head>
+
+<body>
+	
+	
+	<table border="1">
+  <tr>
+    <th>Submission ID</th>
+    <th>Form ID</th>
+    <th>IP</th>
+    <th>Name</th>
+    <th>E-mail</th>
+    <th>Message</th>
+  </tr>
+  <tr>
+    <td>123456789</td>
+    <td>12345</td>
+    <td>123.555.789</td>
+    <td>John Johnny</td>
+    <td>johnny@example.com</td>
+    <td>This is the message John sent you</td>
+  </tr>
+</table>
+	
+	
+	<script>
+
+<?php
+
+$host    = "localhost";
+$user    = "username_here";
+$pass    = "password_here";
+$db_name = "database_name_here";
+
+//create connection
+$connection = mysqli_connect($host, $user, $pass, $db_name);
+
+//test if connection failed
+if(mysqli_connect_errno()){
+    die("connection failed: "
+        . mysqli_connect_error()
+        . " (" . mysqli_connect_errno()
+        . ")");
+}
+
+//get results from database
+$result = mysqli_query($connection,"SELECT * FROM products");
+$all_property = array();  //declare an array for saving property
+
+//showing property
+echo '<table class="data-table">
+        <tr class="data-heading">';  //initialize table tag
+while ($property = mysqli_fetch_field($result)) {
+    echo '<td>' . $property->name . '</td>';  //get field name for header
+    array_push($all_property, $property->name);  //save those to array
+}
+echo '</tr>'; //end tr tag
+
+//showing all data
+while ($row = mysqli_fetch_array($result)) {
+    echo "<tr>";
+    foreach ($all_property as $item) {
+        echo '<td>' . $row[$item] . '</td>'; //get items using property value
+    }
+    echo '</tr>';
+}
+echo "</table>";
+	?>
+	</script>
+</body>
+</html>
